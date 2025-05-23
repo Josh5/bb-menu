@@ -2,6 +2,30 @@
 
 A BusyBox-compatible, standalone text-based menu system written in POSIX shell. Designed for ultra-lightweight Linux systems with minimal tools, this tool allows developers to build nested, script-driven UI menus using nothing more than shell scripts and a simple directory structure.
 
+## ✍️ Example menu output:
+```
++-------------------------------------------+
+|              :: Main Menu ::              |
++-------------------------------------------+
+| > System Info                             |
+|   Show Date & Time                        |
+|   Disk Usage                              |
+|   Fun Tools                               |
+|   Exit                                    |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
++| Prints OS and CPU details              |-+
+```
+
 ## 🧠 Why This Exists
 
 Many minimalist Linux environments (like embedded consoles and retro handhelds) don't have access to dialog, ncurses, or Python. `bb-menu` was created to fill that gap by offering:
