@@ -5,7 +5,7 @@
 # File Created: Tuesday, 20th May 2025 12:42:44 pm
 # Author: Josh.5 (jsunnex@gmail.com)
 # -----
-# Last Modified: Friday, 23rd May 2025 9:46:28 pm
+# Last Modified: Friday, 23rd May 2025 10:34:53 pm
 # Modified By: Josh.5 (jsunnex@gmail.com)
 ###
 
@@ -25,19 +25,19 @@ parse_args() {
             exit 1
             ;;
         *)
-            menu_path="$1"
+            BB_MENU_GLOBAL_MENU_PATH="$1"
             ;;
         esac
         shift
     done
 
-    if [ -z "${menu_path:-}" ]; then
+    if [ -z "${BB_MENU_GLOBAL_MENU_PATH:-}" ]; then
         echo "Usage: $0 [--option=value ...] <main-menu-path>"
         exit 1
     fi
 
-    if [ ! -d "$menu_path/items" ]; then
-        echo "Error: Menu path '$menu_path' must contain an 'items/' directory."
+    if [ ! -d "$BB_MENU_GLOBAL_MENU_PATH/items" ]; then
+        echo "Error: Menu path '$BB_MENU_GLOBAL_MENU_PATH' must contain an 'items/' directory."
         exit 1
     fi
 }
@@ -132,9 +132,9 @@ scroll_description() {
 
     # Prepare scrolling text (wrap twice for smooth loop)
     local scroll_text="${desc}${spacer}${desc}${spacer}"
-    local i=0
     local scroll_text_len=${#scroll_text}
 
+    local i=0
     while :; do
         local part=$(echo "$scroll_text" | cut -c $((i + 1))-$((i + width)))
         printf "\033[%s;2H| %-*s |\n" "$scroll_line" $((width - 2)) "$part"
@@ -264,10 +264,10 @@ main() {
     TROWS="$(echo "$TTY_SIZE" | awk '{print $1}')"
     TCOLS="$(echo "$TTY_SIZE" | awk '{print $2}')"
 
-    appdir="${menu_path%/}"
-    config=""
-    [ -f "${appdir}/menu.ini" ] && config="$(cat "${appdir}/menu.ini")"
-    menu_items="$(generate_menu_items_ini "${appdir}/items" "$config")"
+    local config=""
+    [ -f "${BB_MENU_GLOBAL_MENU_PATH%/}/menu.ini" ] && config="$(cat "${BB_MENU_GLOBAL_MENU_PATH%/}/menu.ini")"
+    local menu_items
+    menu_items="$(generate_menu_items_ini "${BB_MENU_GLOBAL_MENU_PATH%/}/items" "$config")"
     create_menu "${config}
 ${menu_items}"
 }
