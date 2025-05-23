@@ -5,7 +5,7 @@
 # File Created: Tuesday, 20th May 2025 12:42:44 pm
 # Author: Josh.5 (jsunnex@gmail.com)
 # -----
-# Last Modified: Friday, 23rd May 2025 9:21:40 pm
+# Last Modified: Friday, 23rd May 2025 9:46:28 pm
 # Modified By: Josh.5 (jsunnex@gmail.com)
 ###
 
@@ -57,6 +57,20 @@ launch_submenu() {
 }
 
 # ========== Menu Generators ==========
+get_bg_color_code() {
+    case "${BB_MENU_BG_COLOR:-}" in
+    black) echo "40" ;;
+    red) echo "41" ;;
+    green) echo "42" ;;
+    yellow) echo "43" ;;
+    blue) echo "44" ;;
+    magenta) echo "45" ;;
+    cyan) echo "46" ;;
+    white) echo "47" ;;
+    *) echo "" ;;
+    esac
+}
+
 generate_menu_items_ini() {
     local items_path="$1"
     local config_ini="$2"
@@ -141,6 +155,10 @@ draw_menu() {
 
     clear
 
+    # Set background colour
+    local bg_code="$(get_bg_color_code)"
+    [ -n "$bg_code" ] && printf "\033[${bg_code}m"
+
     # Top border and title
     printf "+%s+\n" "$(printf -- '-%.0s' $(seq 1 "$inner_width"))"
 
@@ -168,6 +186,9 @@ draw_menu() {
         printf "|%*s|\n" "$inner_width" ""
         remaining=$((remaining - 1))
     done
+
+    # Close background colour
+    [ -n "$bg_code" ] && printf "\033[0m"
 
     # Bottom border
     printf "+%s+\n" "$(printf -- '-%.0s' $(seq 1 "$inner_width"))"

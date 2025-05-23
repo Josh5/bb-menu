@@ -3,6 +3,7 @@
 A BusyBox-compatible, standalone text-based menu system written in POSIX shell. Designed for ultra-lightweight Linux systems with minimal tools, this tool allows developers to build nested, script-driven UI menus using nothing more than shell scripts and a simple directory structure.
 
 ## ✍️ Example menu output:
+
 ```
 +-------------------------------------------+
 |              :: Main Menu ::              |
@@ -146,16 +147,36 @@ Any command-line arguments passed to the parent menu will also be passed to the 
 From your shell:
 
 ```sh
-./bb-menu ./menus/main
+./bb-menu ./example/menus/main
 ```
 
-With options:
+### Optional CLI Flags
+
+You can customize the behavior of the menu by using --key=value flags. These are automatically exported as environment variables prefixed with `BB_MENU_`.
+
+For example:
 
 ```sh
-./bb-menu --exit-title=Back ./menus/main
+./bb-menu --bg-color=blue ./example/menus/main
 ```
 
-These are passed through as environment variables like `BB_MENU_EXIT_TITLE`, etc.
+This sets BB_MENU_BG_COLOR=blue, which changes the background color of the menu interface.
+
+You can also set these directly in your shell before launching:
+
+```sh
+export BB_MENU_BG_COLOR=blue
+./bb-menu ./example/menus/main
+```
+
+This makes it easier to launch nested menus that inherit the same theme or style.
+
+#### Available Options
+
+| Option           | Description                                                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `--bg-color`     | Sets the menu background color. Supported: **black**, **red**, **green**, **yellow**, **blue** **magenta**, **cyan**, **white** |
+| `(more to come)` | Additional options may be added in future releases                                                                              |
 
 ---
 
